@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import './index.css'
+import './index.css';
+import 'remixicon/fonts/remixicon.css'
 
 const messages = [
   'Learn React ⚛️',
@@ -8,7 +9,8 @@ const messages = [
 ];
 
 const App = () => {
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(1);
+  const [isOpen, setIsOpen] = useState(true);
   function handlePrevious() {
     if (step > 1) {
       setStep(step - 1);
@@ -20,20 +22,30 @@ const App = () => {
       setStep(step + 1);
     }
   }
+
+  function handleOpenClose() {
+    setIsOpen(!isOpen);
+  }
+
   return (
-    <div className="steps">
-      <div className="numbers">
-        <div className={`${step >= 1 ? 'active' : ''}`}>1</div>
-        <div className={`${step >= 2 ? 'active' : ''}`}>2</div>
-        <div className={`${step >= 3 ? 'active' : ''}`}>3</div>
-      </div>
+    <div>
+      <button className='close' onClick={handleOpenClose}>{isOpen === true ? <i class="ri-book-fill"></i> : <i class="ri-book-open-fill"></i>}</button>
+      {isOpen && (
+        <div className="steps">
+          <div className="numbers">
+            <div className={step >= 1 ? 'active' : ''}>1</div>
+            <div className={step >= 2 ? 'active' : ''}>2</div>
+            <div className={step >= 3 ? 'active' : ''}>3</div>
+          </div>
 
-      <p class="message">Step {step}: {messages[step - 1]}</p>
+          <p class="message">Step {step}: {messages[step - 1]}</p>
 
-      <div class="buttons">
-        <button style={{ backgroundColor: "#7950f2", color: "#fff" }} class="previous" onClick={handlePrevious}>Previous</button>
-        <button style={{ backgroundColor: "#7950f2", color: "#fff" }} class="previous" onClick={handleNext}>Next</button>
-      </div>
+          <div class="buttons">
+            <button style={{ backgroundColor: "#7950f2", color: "#fff" }} class="previous" onClick={handlePrevious}>Previous</button>
+            <button style={{ backgroundColor: "#7950f2", color: "#fff" }} class="previous" onClick={handleNext}>Next</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
